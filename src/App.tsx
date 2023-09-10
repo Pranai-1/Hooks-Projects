@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import UseEffect from './components/UseEffect'
+import Effect from './components/Effect'
+import Reducer from './components/Reducer';
 import './App.css'
 
 function App() {
@@ -11,8 +12,8 @@ function App() {
       
       <Routes>
      
-       <Route  path="/" element={<UseEffect />} />
-      
+       <Route  path="/" element={<Effect />} />
+       <Route  path="/reducer" element={<Reducer />} />
        </Routes>
        
        </Router>
