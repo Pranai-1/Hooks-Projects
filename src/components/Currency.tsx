@@ -1,19 +1,20 @@
 import { useState } from "react"
-
+import useCurrencyInfo from './CustomHook'
 function Currency(){
     const [currency, setCurrency] = useState<number | null>(null);
     const[convertedCurrency,setConvertedCurrency]=useState<number | null>(null)
-    const[from,setFrom]=useState<string>("USD")
-    const[to,setTo]=useState<string>("INR")
-
+    const[from,setFrom]=useState<string>("usd")
+    const[to,setTo]=useState<string>("inr")
+    
+    const currencyInfo:any = useCurrencyInfo(from)
+    const options = Object.keys(currencyInfo)
+   
      function handleSubmit(){
-        if(currency!=null){
-        if(from=="USD")
-        setConvertedCurrency(currency*82.865)
-       else
-       setConvertedCurrency(currency/82.865)
-        }
-     }
+        if(currency!=null)
+       setConvertedCurrency(currency*currencyInfo[to])
+       
+       }
+     
 
      const handleCurrencyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
@@ -53,9 +54,11 @@ function Currency(){
                 
                 <div className=' rounded-lg mt-2'>
                 <div className=' font-medium text-sm text-gray-400 pr-1'>Currency Type</div>
-                <select className="bg-slate-100 rounded-lg p-1 mt-1 ml-5">
-                    <option value="option1">{from}</option>
-                  
+                <select className="bg-slate-100 rounded-lg p-1 mt-1 ml-5" value={from}  onChange={(e)=>setFrom(e.target.value)}>
+                {options.map((country)=>(
+                        <option key={country} value={country}>{country.toLocaleUpperCase()}</option>
+                    ))}
+                    
                 </select>
                 </div>
             </div>
@@ -70,18 +73,22 @@ function Currency(){
             <div className='flex justify-between bg-white rounded-lg p-2'>
                 <div className=' rounded-lg mt-2 m-2'>
                 <div className=' font-medium text-sm text-gray-400 pl-1'>TO</div>
-                <input type="number" value={convertedCurrency === null ? '' : convertedCurrency}   className='bg-slate-100 rounded-lg p-1 mt-1'/>
+                <input type="number" value={convertedCurrency === null ? '' : convertedCurrency} readOnly  className='bg-slate-100 rounded-lg p-1 mt-1'/>
                 </div>
                 <div className=' rounded-lg mt-2'>
                 <div className=' font-medium text-sm text-gray-400 pr-1'>Currency Type</div>
-                <select className="bg-slate-100 rounded-lg p-1 mt-1 ml-5">
-                    <option value="option1">{to}</option>
+                <select className="bg-slate-100 rounded-lg p-1 mt-1 ml-5" value={to} onChange={(e)=>setTo(e.target.value)}>
+                {options.map((country)=>(
+                        <option key={country} value={country}>{country.toLocaleUpperCase()}</option>
+                    ))}
+                    
                 </select>
+                
                 </div>
             </div>
             <button className='h-full w-full bg-blue-600 text-xl font-normal text-white p-1 mt-2 rounded-lg text-center mr-4'
             onClick={handleSubmit}
-            >Convert {from} to {to}</button>
+            >Convert {from.toLocaleUpperCase()} to {to.toLocaleUpperCase()}</button>
         </div>
         </div>
         </>
