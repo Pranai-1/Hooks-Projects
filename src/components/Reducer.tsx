@@ -25,7 +25,7 @@ const initialState: State = {
 };
 
 function Reducer() {
-  const [state, dispatch] = useReducer(counterReducer, initialState);
+  const [state, dispatch] = useReducer(counterReducer, initialState); // we can directly assign values instead of objects.we have to use state directly instead of state.count in this case
 
   function submit(actionType: 'INCREMENT' | 'DECREMENT') {
     dispatch({ type: actionType }); //type is mandatory field here
